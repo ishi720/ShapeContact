@@ -8,22 +8,11 @@ class Block {
     bsize=bs;
   }
 
+  // ブロック位置の更新
+  // constrain()を使用して、ブロックが画面内に留まるように制限
   void update() {
-    vp.x=mouseX;
-    vp.y=mouseY;
-
-    if (vp.y<0) {
-      vp.y=0;
-    }//上の限界
-    if (vp.y>height) {
-      vp.y=height;
-    }//下の限界
-    if (vp.x<0) {
-      vp.x=0;
-    }//左の限界
-    if (vp.x>width) {
-      vp.x=width;
-    }//右の限界
+    vp.x = constrain(mouseX, 0, width);
+    vp.y = constrain(mouseY, 0, height);
   }
 
   void show() {
