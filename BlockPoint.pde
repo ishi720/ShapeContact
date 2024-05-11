@@ -1,14 +1,14 @@
 /**
- * ブロックポイントクラス。ブロッククラスを継承。
+ * ブロッククラスを継承した点クラス
  */
 class BlockPoint extends Block {
   /**
    * ポイント生成
-   * @param px x座標
-   * @param py y座標
-   * @param bs サイズ
+   * @param x x座標
+   * @param y y座標
+   * @param size サイズ
    */
-  BlockPoint(int px, int py, int bs) {
-    super(px, py, bs);
+  BlockPoint(int x, int y, int size) {
+    super(x, y, size);
   }
 }

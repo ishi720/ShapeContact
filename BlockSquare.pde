@@ -1,24 +1,29 @@
 class BlockSquare extends Block {
   PVector vs1, vs2, vs3, vs4;
-
-  BlockSquare(int px, int py, int bs) {
-    super(px, py, bs);
-    vs1=new PVector(vp.x-bsize, vp.y-bsize);
-    vs2=new PVector(vp.x+bsize, vp.y-bsize);
-    vs3=new PVector(vp.x-bsize, vp.y+bsize);
-    vs4=new PVector(vp.x+bsize, vp.y+bsize);
+  /**
+   * 四角形を生成
+   * @param x x座標
+   * @param y y座標
+   * @param size サイズ
+   */
+  BlockSquare(int x, int y, int size) {
+    super(x, y, size);
+    vs1 = new PVector(vp.x-bsize, vp.y-bsize);
+    vs2 = new PVector(vp.x+bsize, vp.y-bsize);
+    vs3 = new PVector(vp.x-bsize, vp.y+bsize);
+    vs4 = new PVector(vp.x+bsize, vp.y+bsize);
   }
 
   void update() {
     super.update();
-    vs1.x=vp.x-bsize;
-    vs1.y=vp.y-bsize;
-    vs2.x=vp.x+bsize;
-    vs2.y=vp.y-bsize;
-    vs3.x=vp.x-bsize;
-    vs3.y=vp.y+bsize;
-    vs4.x=vp.x+bsize;
-    vs4.y=vp.y+bsize;
+    vs1.x = vp.x-bsize;
+    vs1.y = vp.y-bsize;
+    vs2.x = vp.x+bsize;
+    vs2.y = vp.y-bsize;
+    vs3.x = vp.x-bsize;
+    vs3.y = vp.y+bsize;
+    vs4.x = vp.x+bsize;
+    vs4.y = vp.y+bsize;
   }
 
   boolean isColliding(Block b) {
@@ -30,16 +35,18 @@ class BlockSquare extends Block {
       return colSS((BlockSquare)b);
     } else if (b instanceof BlockTriangle) {
       return colST((BlockTriangle)b);
+    } else {
+      return false;
     }
-    return false;
   }
 
   //点
   boolean colSP(BlockPoint b) {
-    if (vs1.x<=b.vp.x && vs4.x>=b.vp.x && vs1.y<=b.vp.y && vs4.y>=b.vp.y) {
+    if (vs1.x <= b.vp.x && vs4.x >= b.vp.x && vs1.y <= b.vp.y && vs4.y >= b.vp.y) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   //四角
@@ -49,8 +56,9 @@ class BlockSquare extends Block {
       ||(vp.x-bsize>=b.vs1.x && vp.x-bsize<=b.vs4.x && vp.y+bsize>=b.vs1.y && vp.y+bsize<=b.vs4.y)
       ||(vp.x+bsize>=b.vs1.x && vp.x+bsize<=b.vs4.x && vp.y+bsize>=b.vs1.y && vp.y+bsize<=b.vs4.y)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   //三角
@@ -59,8 +67,9 @@ class BlockSquare extends Block {
       ||(b.vt2.x>=vs1.x && b.vt2.y>=vs1.y && b.vt2.x<=vs4.x && b.vt2.y<=vs4.y)
       ||(b.vt3.x>=vs1.x && b.vt3.y>=vs1.y && b.vt3.x<=vs4.x && b.vt3.y<=vs4.y)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   //円
@@ -91,17 +100,20 @@ class BlockSquare extends Block {
       && (b.vp.y>=vs1.y-bsize) && (b.vp.y<=vs3.y+bsize)
       )) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
+  /**
+   * ブロックを表示
+   */
   void show() {
-
     if (isColliding) {
       fill(0, 0, 0);
     } else {
       fill(0, 255, 0);
     }
-    rect(vp.x-bsize, vp.y-bsize, 2*bsize, 2*bsize);
+    rect(vp.x - bsize, vp.y - bsize, 2 * bsize, 2 * bsize);
   }
 }

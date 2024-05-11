@@ -1,20 +1,23 @@
+/**
+ * ブロッククラスを継承した三角形クラス
+ */
 class BlockTriangle extends Block {
   PVector vt1, vt2, vt3;//三角の頂点
 
   BlockTriangle(int px, int py, int bs) {
     super(px, py, bs);
-    vt1=new PVector(vp.x, vp.y-bsize);
-    vt2=new PVector(vp.x-bsize, vp.y+bsize);
-    vt3=new PVector(vp.x+bsize, vp.y+bsize);
+    vt1 = new PVector(vp.x, vp.y-bsize);
+    vt2 = new PVector(vp.x-bsize, vp.y+bsize);
+    vt3 = new PVector(vp.x+bsize, vp.y+bsize);
   }
   void update() {
     super.update();
-    vt1.x=vp.x;
-    vt1.y=vp.y-bsize;
-    vt2.x=vp.x-bsize;
-    vt2.y=vp.y+bsize;
-    vt3.x=vp.x+bsize;
-    vt3.y=vp.y+bsize;
+    vt1.x = vp.x;
+    vt1.y = vp.y - bsize;
+    vt2.x = vp.x - bsize;
+    vt2.y = vp.y + bsize;
+    vt3.x = vp.x + bsize;
+    vt3.y = vp.y + bsize;
   }
 
   boolean isColliding(Block b) {
@@ -117,13 +120,13 @@ class BlockTriangle extends Block {
     PVector lA, lB, lC;
     PVector l1, l2, l3;
 
-    lA=new PVector(b.vp.x-vt1.x, b.vp.y-vt1.y);
-    lB=new PVector(b.vp.x-vt2.x, b.vp.y-vt2.y);
-    lC=new PVector(b.vp.x-vt3.x, b.vp.y-vt3.y);
+    lA = new PVector(b.vp.x-vt1.x, b.vp.y-vt1.y);
+    lB = new PVector(b.vp.x-vt2.x, b.vp.y-vt2.y);
+    lC = new PVector(b.vp.x-vt3.x, b.vp.y-vt3.y);
 
-    l1=new PVector(vt1.x-vt2.x, vt1.y-vt2.y);
-    l2=new PVector(vt2.x-vt3.x, vt2.y-vt3.y);
-    l3=new PVector(vt3.x-vt1.x, vt3.y-vt1.y);
+    l1 = new PVector(vt1.x-vt2.x, vt1.y-vt2.y);
+    l2 = new PVector(vt2.x-vt3.x, vt2.y-vt3.y);
+    l3 = new PVector(vt3.x-vt1.x, vt3.y-vt1.y);
 
     if (( ((b.vp.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=bsize)
       && (b.vp.x>=vt2.x-bsize) && (b.vp.x<=vt1.x+bsize)

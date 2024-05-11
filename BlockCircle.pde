@@ -1,3 +1,6 @@
+/**
+ * ブロッククラスを継承した円クラス
+ */
 class BlockCircle extends Block {
 
   BlockCircle(int px, int py, int bs) {
@@ -20,9 +23,9 @@ class BlockCircle extends Block {
   //点
   boolean colCP(BlockPoint b) {
     PVector p;
-    p=new PVector(b.vp.x, b.vp.y);
+    p = new PVector(b.vp.x, b.vp.y);
 
-    if (vp.dist(p)<=bsize) {
+    if (vp.dist(p) <= bsize) {
       return true;
     }
     return false;
@@ -30,7 +33,7 @@ class BlockCircle extends Block {
 
   //円
   boolean colCC(BlockCircle b) {
-    if (vp.dist(b.vp)<=bsize+b.bsize) {
+    if (vp.dist(b.vp) <= bsize + b.bsize) {
       return true;
     }
     return false;
@@ -70,13 +73,15 @@ class BlockCircle extends Block {
     return false;
   }
 
+  /**
+   * ブロックを表示
+   */
   void show() {
     if (isColliding) {
       fill(0, 0, 0);
     } else {
       fill(255, 0, 0);
     }
-
     ellipse(vp.x, vp.y, bsize*2, bsize*2);
   }
 }
