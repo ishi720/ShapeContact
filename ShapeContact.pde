@@ -26,15 +26,15 @@ void draw() {
 
   //当たっていない時の判定
   for (int i = 0; i < blocks.length; i++) {
-    blocks[i].iscol = false;
+    blocks[i].isColliding = false;
   }
   //当たっている時の判定
   for (int i = 0; i < blocks.length; i++) {
     for (int j = 0; j < blocks.length; j++) {
       if (i != j) {
-        if (blocks[i].col(blocks[j])) {
-          blocks[i].iscol = true;
-          blocks[j].iscol = true;
+        if (blocks[i].isColliding(blocks[j])) {
+          blocks[i].isColliding = true;
+          blocks[j].isColliding = true;
         }
       }
     }
@@ -47,7 +47,7 @@ void draw() {
 //形をマークする
 void mousePressed() {
   for (int i = 0; i < blocks.length; i++) {
-    if (blocks[i].col(point)) {
+    if (blocks[i].isColliding(point)) {
       mark = i + 1;
     }
   }

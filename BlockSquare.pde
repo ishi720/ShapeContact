@@ -21,7 +21,7 @@ class BlockSquare extends Block {
     vs4.y=vp.y+bsize;
   }
 
-  boolean col(Block b) {
+  boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colSP((BlockPoint)b);
     } else if (b instanceof BlockCircle) {
@@ -97,10 +97,10 @@ class BlockSquare extends Block {
 
   void show() {
 
-    if (iscol==false) {
-      fill(0, 255, 0);
-    } else {
+    if (isColliding) {
       fill(0, 0, 0);
+    } else {
+      fill(0, 255, 0);
     }
     rect(vp.x-bsize, vp.y-bsize, 2*bsize, 2*bsize);
   }

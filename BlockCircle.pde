@@ -4,7 +4,7 @@ class BlockCircle extends Block {
     super(px, py, bs);
   }
 
-  boolean col(Block b) {
+  boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colCP((BlockPoint)b);
     } else if (b instanceof BlockCircle) {
@@ -71,10 +71,10 @@ class BlockCircle extends Block {
   }
 
   void show() {
-    if (iscol==false) {
-      fill(255, 0, 0);
-    } else {
+    if (isColliding) {
       fill(0, 0, 0);
+    } else {
+      fill(255, 0, 0);
     }
 
     ellipse(vp.x, vp.y, bsize*2, bsize*2);

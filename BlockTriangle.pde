@@ -17,7 +17,7 @@ class BlockTriangle extends Block {
     vt3.y=vp.y+bsize;
   }
 
-  boolean col(Block b) {
+  boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colTP((BlockPoint)b);
     } else if (b instanceof BlockCircle) {
@@ -141,10 +141,10 @@ class BlockTriangle extends Block {
   }
 
   void show() {
-    if (iscol==false) {
-      fill(0, 0, 255);
-    } else {
+    if (isColliding) {
       fill(0, 0, 0);
+    } else {
+      fill(0, 0, 255);
     }
     triangle(vp.x, vp.y-bsize, vp.x-bsize, vp.y+bsize, vp.x+bsize, vp.y+bsize);
   }
