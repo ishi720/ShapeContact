@@ -2,7 +2,7 @@ class Block {
   int bsize;//形のサイズ
   PVector vp;//位置
   boolean iscol=false;
-  
+
   Block(int px, int py, int bs) {
     vp=new PVector(px, py);
     bsize=bs;

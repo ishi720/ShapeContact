@@ -7,14 +7,11 @@ class BlockCircle extends Block {
   boolean col(Block b) {
     if (b instanceof BlockPoint) {
       return colCP((BlockPoint)b);
-    }
-    else if (b instanceof BlockCircle) {
+    } else if (b instanceof BlockCircle) {
       return colCC((BlockCircle)b);
-    }
-    else if (b instanceof BlockSquare) {
+    } else if (b instanceof BlockSquare) {
       return colCS((BlockSquare)b);
-    }
-    else if (b instanceof BlockTriangle) {
+    } else if (b instanceof BlockTriangle) {
       return colCT((BlockTriangle)b);
     }
     return false;
@@ -74,13 +71,12 @@ class BlockCircle extends Block {
   }
 
   void show() {
-    if(iscol==false){
-    fill(255, 0, 0);
-    }
-    else{
+    if (iscol==false) {
+      fill(255, 0, 0);
+    } else {
       fill(0, 0, 0);
     }
-    
+
     ellipse(vp.x, vp.y, bsize*2, bsize*2);
   }
 }

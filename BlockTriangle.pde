@@ -6,7 +6,7 @@ class BlockTriangle extends Block {
     vt1=new PVector(vp.x, vp.y-bsize);
     vt2=new PVector(vp.x-bsize, vp.y+bsize);
     vt3=new PVector(vp.x+bsize, vp.y+bsize);
-  } 
+  }
   void update() {
     super.update();
     vt1.x=vp.x;
@@ -16,22 +16,19 @@ class BlockTriangle extends Block {
     vt3.x=vp.x+bsize;
     vt3.y=vp.y+bsize;
   }
-   
-  boolean col(Block b){
-  if(b instanceof BlockPoint){
-    return colTP((BlockPoint)b);
+
+  boolean col(Block b) {
+    if (b instanceof BlockPoint) {
+      return colTP((BlockPoint)b);
+    } else if (b instanceof BlockCircle) {
+      return colTC((BlockCircle)b);
+    } else if (b instanceof BlockSquare) {
+      return colTS((BlockSquare)b);
+    } else if (b instanceof BlockTriangle) {
+      return colTT((BlockTriangle)b);
+    }
+    return false;
   }
-  else if(b instanceof BlockCircle){
-    return colTC((BlockCircle)b);
-  }
-  else if(b instanceof BlockSquare){
-    return colTS((BlockSquare)b);
-  }
-  else if(b instanceof BlockTriangle){
-    return colTT((BlockTriangle)b);
-  }
-  return false;
-}
 
   //点
   boolean colTP(BlockPoint b) {
@@ -39,11 +36,11 @@ class BlockTriangle extends Block {
     PVector mb0 = PVector.sub(vt2, b.vp);
     PVector mc0 = PVector.sub(vt3, b.vp);
 
-    // 各頂点へのベクトル間の角度を調べて合計  
+    // 各頂点へのベクトル間の角度を調べて合計
     float angleSum0 = PVector.angleBetween(ma0, mb0) + PVector.angleBetween(mb0, mc0) + PVector.angleBetween(mc0, ma0);
 
     // およそ(誤差を考慮して)360度ならば内側、それ以外は外側
-    if ((abs(angleSum0 - PI * 2) < 0.1)){
+    if ((abs(angleSum0 - PI * 2) < 0.1)) {
       return true;
     }
     return false;
@@ -64,7 +61,7 @@ class BlockTriangle extends Block {
     PVector mc2 = PVector.sub(vt3, b.vt3);
 
 
-    // 各頂点へのベクトル間の角度を調べて合計  
+    // 各頂点へのベクトル間の角度を調べて合計
     float angleSum0 = PVector.angleBetween(ma0, mb0) + PVector.angleBetween(mb0, mc0) + PVector.angleBetween(mc0, ma0);
     float angleSum1 = PVector.angleBetween(ma1, mb1) + PVector.angleBetween(mb1, mc1) + PVector.angleBetween(mc1, ma1);
     float angleSum2 = PVector.angleBetween(ma2, mb2) + PVector.angleBetween(mb2, mc2) + PVector.angleBetween(mc2, ma2);
@@ -97,7 +94,7 @@ class BlockTriangle extends Block {
     PVector mc3 = PVector.sub(vt3, b.vs4);
 
 
-    // 各頂点へのベクトル間の角度を調べて合計  
+    // 各頂点へのベクトル間の角度を調べて合計
     float angleSum0 = PVector.angleBetween(ma0, mb0) + PVector.angleBetween(mb0, mc0) + PVector.angleBetween(mc0, ma0);
     float angleSum1 = PVector.angleBetween(ma1, mb1) + PVector.angleBetween(mb1, mc1) + PVector.angleBetween(mc1, ma1);
     float angleSum2 = PVector.angleBetween(ma2, mb2) + PVector.angleBetween(mb2, mc2) + PVector.angleBetween(mc2, ma2);
@@ -144,11 +141,10 @@ class BlockTriangle extends Block {
   }
 
   void show() {
-    if(iscol==false){
-    fill(0, 0, 255);
-    }
-    else{
-    fill(0,0,0);
+    if (iscol==false) {
+      fill(0, 0, 255);
+    } else {
+      fill(0, 0, 0);
     }
     triangle(vp.x, vp.y-bsize, vp.x-bsize, vp.y+bsize, vp.x+bsize, vp.y+bsize);
   }

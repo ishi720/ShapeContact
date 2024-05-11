@@ -25,12 +25,12 @@ void draw() {
   p.update();
 
   //当たっていない時の判定
-  for (int i=0;i<=5;i++) {
+  for (int i=0; i<=5; i++) {
     pb[i].iscol=false;
   }
   //当たっている時の判定
-  for (int i=0;i<=5;i++) {
-    for (int j=0;j<=5;j++) {
+  for (int i=0; i<=5; i++) {
+    for (int j=0; j<=5; j++) {
       if (i != j) {
         if (pb[i].col(pb[j])==true) {
           pb[i].iscol=true;
@@ -40,13 +40,13 @@ void draw() {
     }
   }
   //形の表示
-  for (int i=0;i<=5;i++) {  
+  for (int i=0; i<=5; i++) {
     pb[i].show();
   }
 }
 //形をマークする
 void mousePressed() {
-  for (int i=0;i<=5;i++) {  
+  for (int i=0; i<=5; i++) {
     if (pb[i].col(p) == true) {
       mark=i+1;
     }
@@ -54,7 +54,7 @@ void mousePressed() {
 }
 //マークしている形を動かす
 void mouseDragged() {
-  for (int i=0;i<=5;i++) {
+  for (int i=0; i<=5; i++) {
     if (mark==i+1) {
       pb[i].update();
     }

@@ -8,9 +8,9 @@ class BlockSquare extends Block {
     vs3=new PVector(vp.x-bsize, vp.y+bsize);
     vs4=new PVector(vp.x+bsize, vp.y+bsize);
   }
-  
-   void update(){
-     super.update();
+
+  void update() {
+    super.update();
     vs1.x=vp.x-bsize;
     vs1.y=vp.y-bsize;
     vs2.x=vp.x+bsize;
@@ -20,23 +20,20 @@ class BlockSquare extends Block {
     vs4.x=vp.x+bsize;
     vs4.y=vp.y+bsize;
   }
-  
-  boolean col(Block b){
-  if(b instanceof BlockPoint){
-    return colSP((BlockPoint)b);
+
+  boolean col(Block b) {
+    if (b instanceof BlockPoint) {
+      return colSP((BlockPoint)b);
+    } else if (b instanceof BlockCircle) {
+      return colSC((BlockCircle)b);
+    } else if (b instanceof BlockSquare) {
+      return colSS((BlockSquare)b);
+    } else if (b instanceof BlockTriangle) {
+      return colST((BlockTriangle)b);
+    }
+    return false;
   }
-  else if(b instanceof BlockCircle){
-    return colSC((BlockCircle)b);
-  }
-  else if(b instanceof BlockSquare){
-    return colSS((BlockSquare)b);
-  }
-  else if(b instanceof BlockTriangle){
-    return colST((BlockTriangle)b);
-  }
-  return false;
-}
-  
+
   //点
   boolean colSP(BlockPoint b) {
     if (vs1.x<=b.vp.x && vs4.x>=b.vp.x && vs1.y<=b.vp.y && vs4.y>=b.vp.y) {
@@ -50,7 +47,7 @@ class BlockSquare extends Block {
     if ((vp.x-bsize>=b.vs1.x && vp.x-bsize<=b.vs4.x && vp.y-bsize>=b.vs1.y && vp.y-bsize<=b.vs4.y)
       ||(vp.x+bsize>=b.vs1.x && vp.x+bsize<=b.vs4.x && vp.y-bsize>=b.vs1.y && vp.y-bsize<=b.vs4.y)
       ||(vp.x-bsize>=b.vs1.x && vp.x-bsize<=b.vs4.x && vp.y+bsize>=b.vs1.y && vp.y+bsize<=b.vs4.y)
-      ||(vp.x+bsize>=b.vs1.x && vp.x+bsize<=b.vs4.x && vp.y+bsize>=b.vs1.y && vp.y+bsize<=b.vs4.y)) {     
+      ||(vp.x+bsize>=b.vs1.x && vp.x+bsize<=b.vs4.x && vp.y+bsize>=b.vs1.y && vp.y+bsize<=b.vs4.y)) {
       return true;
     }
     return false;
@@ -70,7 +67,7 @@ class BlockSquare extends Block {
   boolean colSC(BlockCircle b) {
     PVector LA, LB, LC, LD;//四角の隅
     PVector L1, L2, L3, L4;//四角の辺
-    
+
     LA=new PVector(b.vp.x-vs1.x, b.vp.y-vs1.y);
     LB=new PVector(b.vp.x-vs2.x, b.vp.y-vs2.y);
     LC=new PVector(b.vp.x-vs3.x, b.vp.y-vs3.y);
@@ -97,14 +94,13 @@ class BlockSquare extends Block {
     }
     return false;
   }
-  
+
   void show() {
-    
-    if(iscol==false){
-    fill(0, 255, 0);
-    }
-    else{
-    fill(0, 0, 0);
+
+    if (iscol==false) {
+      fill(0, 255, 0);
+    } else {
+      fill(0, 0, 0);
     }
     rect(vp.x-bsize, vp.y-bsize, 2*bsize, 2*bsize);
   }
