@@ -55,23 +55,20 @@ class BlockCircle extends Block {
    * @return 当たっている場合はtrue、それ以外の場合はfalse
    */
   private boolean colCS(BlockSquare b) {
-    PVector vs1, vs2, vs3, vs4;
+    PVector[] vertices = {
+        new PVector(b.point.x - this.size, b.point.y - this.size),
+        new PVector(b.point.x + this.size, b.point.y - this.size),
+        new PVector(b.point.x - this.size, b.point.y + this.size),
+        new PVector(b.point.x + this.size, b.point.y + this.size)
+    };
 
-    vs1 = new PVector(b.point.x - this.size, b.point.y - this.size);
-    vs2 = new PVector(b.point.x + this.size, b.point.y - this.size);
-    vs3 = new PVector(b.point.x - this.size, b.point.y + this.size);
-    vs4 = new PVector(b.point.x + this.size, b.point.y + this.size);
-
-    if (
-      (this.point.dist(vs1) <= this.size) ||
-      (this.point.dist(vs2) <= this.size) ||
-      (this.point.dist(vs3) <= this.size) ||
-      (this.point.dist(vs4) <= this.size)
-    ) {
-      return true;
-    } else {
-      return false;
+    for (PVector vertex : vertices) {
+        if (this.point.dist(vertex) <= this.size) {
+            return true;
+        }
     }
+
+    return false;
   }
 
   /**
@@ -80,21 +77,19 @@ class BlockCircle extends Block {
    * @return 当たっている場合はtrue、それ以外の場合はfalse
    */
   private boolean colCT(BlockTriangle b) {
-    PVector vt1, vt2, vt3;
+    PVector[] vertices = {
+        new PVector(b.point.x, b.point.y - this.size),
+        new PVector(b.point.x - this.size, b.point.y + this.size),
+        new PVector(b.point.x + this.size, b.point.y + this.size)
+    };
 
-    vt1 = new PVector(b.point.x, b.point.y - this.size);
-    vt2 = new PVector(b.point.x - this.size, b.point.y + this.size);
-    vt3 = new PVector(b.point.x + this.size, b.point.y + this.size);
-
-    if (
-      (this.point.dist(vt1) <= this.size) ||
-      (this.point.dist(vt2) <= this.size) ||
-      (this.point.dist(vt3) <= this.size)
-    ) {
-      return true;
-    } else {
-      return false;
+    for (PVector vertex : vertices) {
+        if (this.point.dist(vertex) <= this.size) {
+            return true;
+        }
     }
+
+    return false;
   }
 
   /**

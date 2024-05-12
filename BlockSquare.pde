@@ -17,6 +17,9 @@ class BlockSquare extends Block {
     vs4 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
 
+  /**
+   * ブロックの位置を更新
+   */
   void update() {
     super.update();
     vs1.x = this.point.x - this.size;

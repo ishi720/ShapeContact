@@ -17,6 +17,9 @@ class BlockTriangle extends Block {
     vt3 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
 
+  /**
+   * ブロックの位置を更新
+   */
   void update() {
     super.update();
     vt1.x = this.point.x;
