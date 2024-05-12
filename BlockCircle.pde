@@ -2,7 +2,6 @@
  * ブロッククラスを継承した円クラス
  */
 class BlockCircle extends Block {
-
   /**
    * 円を生成
    * @param x x座標
@@ -13,6 +12,11 @@ class BlockCircle extends Block {
     super(x, y, size);
   }
 
+  /**
+   * 他ブロックとの当たり判定を行う
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colCP((BlockPoint)b);
@@ -27,36 +31,54 @@ class BlockCircle extends Block {
     }
   }
 
-  //点
+  /**
+   * 円と点の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colCP(BlockPoint b) {
     return this.point.dist(b.point) <= this.size;
   }
 
-  //円
+  /**
+   * 円と円の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colCC(BlockCircle b) {
     return this.point.dist(b.point) <= this.size + b.size;
   }
 
-  //四角
+  /**
+   * 円と四角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colCS(BlockSquare b) {
     PVector vs1, vs2, vs3, vs4;
 
-    vs1 = new PVector(b.point.x-this.size, b.point.y-this.size);
-    vs2 = new PVector(b.point.x+this.size, b.point.y-this.size);
-    vs3 = new PVector(b.point.x-this.size, b.point.y+this.size);
-    vs4 = new PVector(b.point.x+this.size, b.point.y+this.size);
+    vs1 = new PVector(b.point.x - this.size, b.point.y - this.size);
+    vs2 = new PVector(b.point.x + this.size, b.point.y - this.size);
+    vs3 = new PVector(b.point.x - this.size, b.point.y + this.size);
+    vs4 = new PVector(b.point.x + this.size, b.point.y + this.size);
 
-    if ((this.point.dist(vs1)<=this.size)
-      ||(this.point.dist(vs2)<=this.size)
-      ||(this.point.dist(vs3)<=this.size)
-      ||(this.point.dist(vs4)<=this.size)) {
+    if (
+      (this.point.dist(vs1) <= this.size) ||
+      (this.point.dist(vs2) <= this.size) ||
+      (this.point.dist(vs3) <= this.size) ||
+      (this.point.dist(vs4) <= this.size)
+    ) {
       return true;
     } else {
       return false;
     }
   }
 
-  //三角
+  /**
+   * 円と三角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colCT(BlockTriangle b) {
     PVector vt1, vt2, vt3;
 
@@ -64,9 +86,11 @@ class BlockCircle extends Block {
     vt2 = new PVector(b.point.x - this.size, b.point.y + this.size);
     vt3 = new PVector(b.point.x + this.size, b.point.y + this.size);
 
-    if ((this.point.dist(vt1)<=this.size)
-      ||(this.point.dist(vt2)<=this.size)
-      ||(this.point.dist(vt3)<=this.size)) {
+    if (
+      (this.point.dist(vt1) <= this.size) ||
+      (this.point.dist(vt2) <= this.size) ||
+      (this.point.dist(vt3) <= this.size)
+    ) {
       return true;
     } else {
       return false;

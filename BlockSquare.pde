@@ -1,3 +1,6 @@
+/**
+ * ブロッククラスを継承した四角形クラス
+ */
 class BlockSquare extends Block {
   PVector vs1, vs2, vs3, vs4;
   /**
@@ -26,6 +29,11 @@ class BlockSquare extends Block {
     vs4.y = this.point.y + this.size;
   }
 
+  /**
+   * 他ブロックとの当たり判定を行う
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colSP((BlockPoint)b);
@@ -40,7 +48,11 @@ class BlockSquare extends Block {
     }
   }
 
-  //点
+  /**
+   * 四角形と点の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colSP(BlockPoint b) {
     if (vs1.x <= b.point.x && vs4.x >= b.point.x && vs1.y <= b.point.y && vs4.y >= b.point.y) {
       return true;
@@ -49,7 +61,11 @@ class BlockSquare extends Block {
     }
   }
 
-  //四角
+  /**
+   * 四角形と四角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colSS(BlockSquare b) {
     if ((this.point.x-this.size>=b.vs1.x && this.point.x-this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
       ||(this.point.x+this.size>=b.vs1.x && this.point.x+this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
@@ -61,7 +77,11 @@ class BlockSquare extends Block {
     }
   }
 
-  //三角
+  /**
+   * 四角形と三角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colST(BlockTriangle b) {
     if ((b.vt1.x>=vs1.x && b.vt1.y>=vs1.y && b.vt1.x<=vs4.x && b.vt1.y<=vs4.y)
       ||(b.vt2.x>=vs1.x && b.vt2.y>=vs1.y && b.vt2.x<=vs4.x && b.vt2.y<=vs4.y)
@@ -72,7 +92,11 @@ class BlockSquare extends Block {
     }
   }
 
-  //円
+  /**
+   * 四角形と円の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colSC(BlockCircle b) {
     PVector LA, LB, LC, LD;//四角の隅
     PVector L1, L2, L3, L4;//四角の辺

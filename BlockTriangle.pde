@@ -16,6 +16,7 @@ class BlockTriangle extends Block {
     vt2 = new PVector(this.point.x - this.size, this.point.y + this.size);
     vt3 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
+
   void update() {
     super.update();
     vt1.x = this.point.x;
@@ -26,6 +27,11 @@ class BlockTriangle extends Block {
     vt3.y = this.point.y + this.size;
   }
 
+  /**
+   * 他ブロックとの当たり判定を行う
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   boolean isColliding(Block b) {
     if (b instanceof BlockPoint) {
       return colTP((BlockPoint)b);
@@ -40,7 +46,11 @@ class BlockTriangle extends Block {
     }
   }
 
-  //点
+  /**
+   * 三角形と点の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colTP(BlockPoint b) {
     PVector ma0 = PVector.sub(vt1, b.point);
     PVector mb0 = PVector.sub(vt2, b.point);
@@ -87,7 +97,11 @@ class BlockTriangle extends Block {
     }
   }
 
-  //四角
+  /**
+   * 三角形と四角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colTS(BlockSquare b) {
     PVector ma0 = PVector.sub(vt1, b.vs1);
     PVector mb0 = PVector.sub(vt2, b.vs1);
@@ -105,13 +119,11 @@ class BlockTriangle extends Block {
     PVector mb3 = PVector.sub(vt2, b.vs4);
     PVector mc3 = PVector.sub(vt3, b.vs4);
 
-
     // 各頂点へのベクトル間の角度を調べて合計
     float angleSum0 = PVector.angleBetween(ma0, mb0) + PVector.angleBetween(mb0, mc0) + PVector.angleBetween(mc0, ma0);
     float angleSum1 = PVector.angleBetween(ma1, mb1) + PVector.angleBetween(mb1, mc1) + PVector.angleBetween(mc1, ma1);
     float angleSum2 = PVector.angleBetween(ma2, mb2) + PVector.angleBetween(mb2, mc2) + PVector.angleBetween(mc2, ma2);
     float angleSum3 = PVector.angleBetween(ma3, mb3) + PVector.angleBetween(mb3, mc3) + PVector.angleBetween(mc3, ma3);
-
 
     // およそ(誤差を考慮して)360度ならば内側、それ以外は外側
     if ((abs(angleSum0 - PI * 2) < 0.1)
@@ -124,8 +136,11 @@ class BlockTriangle extends Block {
     }
   }
 
-
-  //円
+  /**
+   * 三角形と円の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colTC(BlockCircle b) {
     PVector lA, lB, lC;
     PVector l1, l2, l3;
@@ -154,12 +169,15 @@ class BlockTriangle extends Block {
     }
   }
 
+  /**
+   * ブロックを表示
+   */
   void show() {
     if (isColliding) {
       fill(0, 0, 0);
     } else {
       fill(0, 0, 255);
     }
-    triangle(this.point.x, this.point.y-this.size, this.point.x-this.size, this.point.y+this.size, this.point.x+this.size, this.point.y+this.size);
+    triangle(this.point.x, this.point.y - this.size, this.point.x - this.size, this.point.y + this.size, this.point.x + this.size, this.point.y + this.size);
   }
 }
