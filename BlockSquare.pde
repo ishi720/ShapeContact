@@ -8,22 +8,22 @@ class BlockSquare extends Block {
    */
   BlockSquare(int x, int y, int size) {
     super(x, y, size);
-    vs1 = new PVector(vp.x - this.size, vp.y - this.size);
-    vs2 = new PVector(vp.x + this.size, vp.y - this.size);
-    vs3 = new PVector(vp.x - this.size, vp.y + this.size);
-    vs4 = new PVector(vp.x + this.size, vp.y + this.size);
+    vs1 = new PVector(this.point.x - this.size, this.point.y - this.size);
+    vs2 = new PVector(this.point.x + this.size, this.point.y - this.size);
+    vs3 = new PVector(this.point.x - this.size, this.point.y + this.size);
+    vs4 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
 
   void update() {
     super.update();
-    vs1.x = vp.x - this.size;
-    vs1.y = vp.y - this.size;
-    vs2.x = vp.x + this.size;
-    vs2.y = vp.y - this.size;
-    vs3.x = vp.x - this.size;
-    vs3.y = vp.y + this.size;
-    vs4.x = vp.x + this.size;
-    vs4.y = vp.y + this.size;
+    vs1.x = this.point.x - this.size;
+    vs1.y = this.point.y - this.size;
+    vs2.x = this.point.x + this.size;
+    vs2.y = this.point.y - this.size;
+    vs3.x = this.point.x - this.size;
+    vs3.y = this.point.y + this.size;
+    vs4.x = this.point.x + this.size;
+    vs4.y = this.point.y + this.size;
   }
 
   boolean isColliding(Block b) {
@@ -42,7 +42,7 @@ class BlockSquare extends Block {
 
   //点
   boolean colSP(BlockPoint b) {
-    if (vs1.x <= b.vp.x && vs4.x >= b.vp.x && vs1.y <= b.vp.y && vs4.y >= b.vp.y) {
+    if (vs1.x <= b.point.x && vs4.x >= b.point.x && vs1.y <= b.point.y && vs4.y >= b.point.y) {
       return true;
     } else {
       return false;
@@ -51,10 +51,10 @@ class BlockSquare extends Block {
 
   //四角
   boolean colSS(BlockSquare b) {
-    if ((vp.x-this.size>=b.vs1.x && vp.x-this.size<=b.vs4.x && vp.y-this.size>=b.vs1.y && vp.y-this.size<=b.vs4.y)
-      ||(vp.x+this.size>=b.vs1.x && vp.x+this.size<=b.vs4.x && vp.y-this.size>=b.vs1.y && vp.y-this.size<=b.vs4.y)
-      ||(vp.x-this.size>=b.vs1.x && vp.x-this.size<=b.vs4.x && vp.y+this.size>=b.vs1.y && vp.y+this.size<=b.vs4.y)
-      ||(vp.x+this.size>=b.vs1.x && vp.x+this.size<=b.vs4.x && vp.y+this.size>=b.vs1.y && vp.y+this.size<=b.vs4.y)) {
+    if ((this.point.x-this.size>=b.vs1.x && this.point.x-this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
+      ||(this.point.x+this.size>=b.vs1.x && this.point.x+this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
+      ||(this.point.x-this.size>=b.vs1.x && this.point.x-this.size<=b.vs4.x && this.point.y+this.size>=b.vs1.y && this.point.y+this.size<=b.vs4.y)
+      ||(this.point.x+this.size>=b.vs1.x && this.point.x+this.size<=b.vs4.x && this.point.y+this.size>=b.vs1.y && this.point.y+this.size<=b.vs4.y)) {
       return true;
     } else {
       return false;
@@ -77,27 +77,27 @@ class BlockSquare extends Block {
     PVector LA, LB, LC, LD;//四角の隅
     PVector L1, L2, L3, L4;//四角の辺
 
-    LA = new PVector(b.vp.x-vs1.x, b.vp.y-vs1.y);
-    LB = new PVector(b.vp.x-vs2.x, b.vp.y-vs2.y);
-    LC = new PVector(b.vp.x-vs3.x, b.vp.y-vs3.y);
-    LD = new PVector(b.vp.x-vs4.x, b.vp.y-vs4.y);
+    LA = new PVector(b.point.x-vs1.x, b.point.y-vs1.y);
+    LB = new PVector(b.point.x-vs2.x, b.point.y-vs2.y);
+    LC = new PVector(b.point.x-vs3.x, b.point.y-vs3.y);
+    LD = new PVector(b.point.x-vs4.x, b.point.y-vs4.y);
     L1 = new PVector(vs1.x-vs2.x, vs1.y-vs2.y);
     L2 = new PVector(vs2.x-vs4.x, vs2.y-vs4.y);
     L3 = new PVector(vs4.x-vs3.x, vs4.y-vs3.y);
     L4 = new PVector(vs3.x-vs1.x, vs3.y-vs1.y);
 
-    if (( ((b.vp.dist(vs1)*sin(PVector.angleBetween(LA, L1))) <=this.size)
-      && (b.vp.x>=vs1.x-this.size) && (b.vp.x<=vs2.x+this.size)
-      && (b.vp.y>=vs1.y-this.size) && (b.vp.y<=vs2.y+this.size)
-      ||((b.vp.dist(vs2)*sin(PVector.angleBetween(LB, L2))) <=this.size)
-      && (b.vp.x>=vs2.x-this.size) && (b.vp.x<=vs4.x+this.size)
-      && (b.vp.y>=vs2.y-this.size) && (b.vp.y<=vs4.y+this.size)
-      ||((b.vp.dist(vs3)*sin(PVector.angleBetween(LC, L3))) <=this.size)
-      && (b.vp.x>=vs3.x-this.size) && (b.vp.x<=vs4.x+this.size)
-      && (b.vp.y>=vs3.y-this.size) && (b.vp.y<=vs4.y+this.size)
-      ||((b.vp.dist(vs1)*sin(PVector.angleBetween(LA, L4))) <=this.size)
-      && (b.vp.x>=vs1.x-this.size) && (b.vp.x<=vs3.x+this.size)
-      && (b.vp.y>=vs1.y-this.size) && (b.vp.y<=vs3.y+this.size)
+    if (( ((b.point.dist(vs1)*sin(PVector.angleBetween(LA, L1))) <=this.size)
+      && (b.point.x>=vs1.x-this.size) && (b.point.x<=vs2.x+this.size)
+      && (b.point.y>=vs1.y-this.size) && (b.point.y<=vs2.y+this.size)
+      ||((b.point.dist(vs2)*sin(PVector.angleBetween(LB, L2))) <=this.size)
+      && (b.point.x>=vs2.x-this.size) && (b.point.x<=vs4.x+this.size)
+      && (b.point.y>=vs2.y-this.size) && (b.point.y<=vs4.y+this.size)
+      ||((b.point.dist(vs3)*sin(PVector.angleBetween(LC, L3))) <=this.size)
+      && (b.point.x>=vs3.x-this.size) && (b.point.x<=vs4.x+this.size)
+      && (b.point.y>=vs3.y-this.size) && (b.point.y<=vs4.y+this.size)
+      ||((b.point.dist(vs1)*sin(PVector.angleBetween(LA, L4))) <=this.size)
+      && (b.point.x>=vs1.x-this.size) && (b.point.x<=vs3.x+this.size)
+      && (b.point.y>=vs1.y-this.size) && (b.point.y<=vs3.y+this.size)
       )) {
       return true;
     } else {
@@ -114,6 +114,6 @@ class BlockSquare extends Block {
     } else {
       fill(0, 255, 0);
     }
-    rect(vp.x - this.size, vp.y - this.size, 2 * this.size, 2 * this.size);
+    rect(this.point.x - this.size, this.point.y - this.size, 2 * this.size, 2 * this.size);
   }
 }

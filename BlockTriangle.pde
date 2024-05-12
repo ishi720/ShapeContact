@@ -4,20 +4,26 @@
 class BlockTriangle extends Block {
   PVector vt1, vt2, vt3;//三角の頂点
 
-  BlockTriangle(int px, int py, int bs) {
-    super(px, py, bs);
-    vt1 = new PVector(vp.x, vp.y - this.size);
-    vt2 = new PVector(vp.x-this.size, vp.y + this.size);
-    vt3 = new PVector(vp.x+this.size, vp.y + this.size);
+  /**
+   * 三角形を生成
+   * @param x x座標
+   * @param y y座標
+   * @param size サイズ
+   */
+  BlockTriangle(int x, int y, int size) {
+    super(x, y, size);
+    vt1 = new PVector(this.point.x, this.point.y - this.size);
+    vt2 = new PVector(this.point.x - this.size, this.point.y + this.size);
+    vt3 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
   void update() {
     super.update();
-    vt1.x = vp.x;
-    vt1.y = vp.y - this.size;
-    vt2.x = vp.x - this.size;
-    vt2.y = vp.y + this.size;
-    vt3.x = vp.x + this.size;
-    vt3.y = vp.y + this.size;
+    vt1.x = this.point.x;
+    vt1.y = this.point.y - this.size;
+    vt2.x = this.point.x - this.size;
+    vt2.y = this.point.y + this.size;
+    vt3.x = this.point.x + this.size;
+    vt3.y = this.point.y + this.size;
   }
 
   boolean isColliding(Block b) {
@@ -29,15 +35,16 @@ class BlockTriangle extends Block {
       return colTS((BlockSquare)b);
     } else if (b instanceof BlockTriangle) {
       return colTT((BlockTriangle)b);
+    } else {
+      return false;
     }
-    return false;
   }
 
   //点
   boolean colTP(BlockPoint b) {
-    PVector ma0 = PVector.sub(vt1, b.vp);
-    PVector mb0 = PVector.sub(vt2, b.vp);
-    PVector mc0 = PVector.sub(vt3, b.vp);
+    PVector ma0 = PVector.sub(vt1, b.point);
+    PVector mb0 = PVector.sub(vt2, b.point);
+    PVector mc0 = PVector.sub(vt3, b.point);
 
     // 各頂点へのベクトル間の角度を調べて合計
     float angleSum0 = PVector.angleBetween(ma0, mb0) + PVector.angleBetween(mb0, mc0) + PVector.angleBetween(mc0, ma0);
@@ -45,8 +52,9 @@ class BlockTriangle extends Block {
     // およそ(誤差を考慮して)360度ならば内側、それ以外は外側
     if ((abs(angleSum0 - PI * 2) < 0.1)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   //三角
@@ -69,13 +77,14 @@ class BlockTriangle extends Block {
     float angleSum1 = PVector.angleBetween(ma1, mb1) + PVector.angleBetween(mb1, mc1) + PVector.angleBetween(mc1, ma1);
     float angleSum2 = PVector.angleBetween(ma2, mb2) + PVector.angleBetween(mb2, mc2) + PVector.angleBetween(mc2, ma2);
 
-
     // およそ(誤差を考慮して)360度ならば内側、それ以外は外側
     if ((abs(angleSum0 - PI * 2) < 0.1)
       || (abs(angleSum1 - PI * 2) < 0.1)
-      || (abs(angleSum2 - PI * 2) < 0.1))
+      || (abs(angleSum2 - PI * 2) < 0.1)) {
       return true;
-    return false;
+    } else {
+      return false;
+    }
   }
 
   //四角
@@ -121,27 +130,28 @@ class BlockTriangle extends Block {
     PVector lA, lB, lC;
     PVector l1, l2, l3;
 
-    lA = new PVector(b.vp.x - vt1.x, b.vp.y - vt1.y);
-    lB = new PVector(b.vp.x - vt2.x, b.vp.y - vt2.y);
-    lC = new PVector(b.vp.x - vt3.x, b.vp.y - vt3.y);
+    lA = new PVector(b.point.x - vt1.x, b.point.y - vt1.y);
+    lB = new PVector(b.point.x - vt2.x, b.point.y - vt2.y);
+    lC = new PVector(b.point.x - vt3.x, b.point.y - vt3.y);
 
     l1 = new PVector(vt1.x - vt2.x, vt1.y - vt2.y);
     l2 = new PVector(vt2.x - vt3.x, vt2.y - vt3.y);
     l3 = new PVector(vt3.x - vt1.x, vt3.y - vt1.y);
 
-    if (( ((b.vp.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=this.size)
-      && (b.vp.x>=vt2.x-this.size) && (b.vp.x<=vt1.x+this.size)
-      && (b.vp.y>=vt1.y-this.size) && (b.vp.y<=vt2.y+this.size)
-      || ((b.vp.dist(vt2)*sin(PVector.angleBetween(lB, l2))) <=this.size)
-      && (b.vp.x>=vt2.x-this.size) && (b.vp.x<=vt3.x+this.size)
-      && (b.vp.y>=vt2.y-this.size) && (b.vp.y<=vt3.y+this.size)
-      || ((b.vp.dist(vt3)*sin(PVector.angleBetween(lC, l3))) <=this.size)
-      && (b.vp.x>=vt1.x-this.size) && (b.vp.x<=vt3.x+this.size)
-      && (b.vp.y>=vt1.y-this.size) && (b.vp.y<=vt3.y+this.size)
+    if (( ((b.point.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=this.size)
+      && (b.point.x>=vt2.x-this.size) && (b.point.x<=vt1.x+this.size)
+      && (b.point.y>=vt1.y-this.size) && (b.point.y<=vt2.y+this.size)
+      || ((b.point.dist(vt2)*sin(PVector.angleBetween(lB, l2))) <=this.size)
+      && (b.point.x>=vt2.x-this.size) && (b.point.x<=vt3.x+this.size)
+      && (b.point.y>=vt2.y-this.size) && (b.point.y<=vt3.y+this.size)
+      || ((b.point.dist(vt3)*sin(PVector.angleBetween(lC, l3))) <=this.size)
+      && (b.point.x>=vt1.x-this.size) && (b.point.x<=vt3.x+this.size)
+      && (b.point.y>=vt1.y-this.size) && (b.point.y<=vt3.y+this.size)
       )) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   void show() {
@@ -150,6 +160,6 @@ class BlockTriangle extends Block {
     } else {
       fill(0, 0, 255);
     }
-    triangle(vp.x, vp.y-this.size, vp.x-this.size, vp.y+this.size, vp.x+this.size, vp.y+this.size);
+    triangle(this.point.x, this.point.y-this.size, this.point.x-this.size, this.point.y+this.size, this.point.x+this.size, this.point.y+this.size);
   }
 }
