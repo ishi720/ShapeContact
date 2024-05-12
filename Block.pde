@@ -2,7 +2,7 @@
  * ブロッククラス
  */
 class Block {
-  int bsize; // 形のサイズ
+  int size; // 形のサイズ
   PVector vp; // 位置
   boolean isColliding = false; // 衝突フラグ
 
@@ -10,11 +10,11 @@ class Block {
    * ブロックを生成
    * @param px ブロックのx座標
    * @param py ブロックのy座標
-   * @param bs ブロックの形のサイズ
+   * @param size ブロックの形のサイズ
    */
-  Block(int px, int py, int bs) {
+  Block(int px, int py, int size) {
     vp = new PVector(px, py);
-    bsize = bs;
+    this.size = size;
   }
 
   /**

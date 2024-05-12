@@ -6,18 +6,18 @@ class BlockTriangle extends Block {
 
   BlockTriangle(int px, int py, int bs) {
     super(px, py, bs);
-    vt1 = new PVector(vp.x, vp.y-bsize);
-    vt2 = new PVector(vp.x-bsize, vp.y+bsize);
-    vt3 = new PVector(vp.x+bsize, vp.y+bsize);
+    vt1 = new PVector(vp.x, vp.y - this.size);
+    vt2 = new PVector(vp.x-this.size, vp.y + this.size);
+    vt3 = new PVector(vp.x+this.size, vp.y + this.size);
   }
   void update() {
     super.update();
     vt1.x = vp.x;
-    vt1.y = vp.y - bsize;
-    vt2.x = vp.x - bsize;
-    vt2.y = vp.y + bsize;
-    vt3.x = vp.x + bsize;
-    vt3.y = vp.y + bsize;
+    vt1.y = vp.y - this.size;
+    vt2.x = vp.x - this.size;
+    vt2.y = vp.y + this.size;
+    vt3.x = vp.x + this.size;
+    vt3.y = vp.y + this.size;
   }
 
   boolean isColliding(Block b) {
@@ -110,8 +110,9 @@ class BlockTriangle extends Block {
       || (abs(angleSum2 - PI * 2) < 0.1)
       || (abs(angleSum3 - PI * 2) < 0.1)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
 
@@ -120,23 +121,23 @@ class BlockTriangle extends Block {
     PVector lA, lB, lC;
     PVector l1, l2, l3;
 
-    lA = new PVector(b.vp.x-vt1.x, b.vp.y-vt1.y);
-    lB = new PVector(b.vp.x-vt2.x, b.vp.y-vt2.y);
-    lC = new PVector(b.vp.x-vt3.x, b.vp.y-vt3.y);
+    lA = new PVector(b.vp.x - vt1.x, b.vp.y - vt1.y);
+    lB = new PVector(b.vp.x - vt2.x, b.vp.y - vt2.y);
+    lC = new PVector(b.vp.x - vt3.x, b.vp.y - vt3.y);
 
-    l1 = new PVector(vt1.x-vt2.x, vt1.y-vt2.y);
-    l2 = new PVector(vt2.x-vt3.x, vt2.y-vt3.y);
-    l3 = new PVector(vt3.x-vt1.x, vt3.y-vt1.y);
+    l1 = new PVector(vt1.x - vt2.x, vt1.y - vt2.y);
+    l2 = new PVector(vt2.x - vt3.x, vt2.y - vt3.y);
+    l3 = new PVector(vt3.x - vt1.x, vt3.y - vt1.y);
 
-    if (( ((b.vp.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=bsize)
-      && (b.vp.x>=vt2.x-bsize) && (b.vp.x<=vt1.x+bsize)
-      && (b.vp.y>=vt1.y-bsize) && (b.vp.y<=vt2.y+bsize)
-      || ((b.vp.dist(vt2)*sin(PVector.angleBetween(lB, l2))) <=bsize)
-      && (b.vp.x>=vt2.x-bsize) && (b.vp.x<=vt3.x+bsize)
-      && (b.vp.y>=vt2.y-bsize) && (b.vp.y<=vt3.y+bsize)
-      || ((b.vp.dist(vt3)*sin(PVector.angleBetween(lC, l3))) <=bsize)
-      && (b.vp.x>=vt1.x-bsize) && (b.vp.x<=vt3.x+bsize)
-      && (b.vp.y>=vt1.y-bsize) && (b.vp.y<=vt3.y+bsize)
+    if (( ((b.vp.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=this.size)
+      && (b.vp.x>=vt2.x-this.size) && (b.vp.x<=vt1.x+this.size)
+      && (b.vp.y>=vt1.y-this.size) && (b.vp.y<=vt2.y+this.size)
+      || ((b.vp.dist(vt2)*sin(PVector.angleBetween(lB, l2))) <=this.size)
+      && (b.vp.x>=vt2.x-this.size) && (b.vp.x<=vt3.x+this.size)
+      && (b.vp.y>=vt2.y-this.size) && (b.vp.y<=vt3.y+this.size)
+      || ((b.vp.dist(vt3)*sin(PVector.angleBetween(lC, l3))) <=this.size)
+      && (b.vp.x>=vt1.x-this.size) && (b.vp.x<=vt3.x+this.size)
+      && (b.vp.y>=vt1.y-this.size) && (b.vp.y<=vt3.y+this.size)
       )) {
       return true;
     }
@@ -149,6 +150,6 @@ class BlockTriangle extends Block {
     } else {
       fill(0, 0, 255);
     }
-    triangle(vp.x, vp.y-bsize, vp.x-bsize, vp.y+bsize, vp.x+bsize, vp.y+bsize);
+    triangle(vp.x, vp.y-this.size, vp.x-this.size, vp.y+this.size, vp.x+this.size, vp.y+this.size);
   }
 }
