@@ -41,7 +41,7 @@ class BlockTriangle extends Block {
   }
 
   //点
-  boolean colTP(BlockPoint b) {
+  private boolean colTP(BlockPoint b) {
     PVector ma0 = PVector.sub(vt1, b.point);
     PVector mb0 = PVector.sub(vt2, b.point);
     PVector mc0 = PVector.sub(vt3, b.point);
@@ -58,7 +58,7 @@ class BlockTriangle extends Block {
   }
 
   //三角
-  boolean colTT(BlockTriangle b) {
+  private boolean colTT(BlockTriangle b) {
     PVector ma0 = PVector.sub(vt1, b.vt1);
     PVector mb0 = PVector.sub(vt2, b.vt1);
     PVector mc0 = PVector.sub(vt3, b.vt1);
@@ -88,7 +88,7 @@ class BlockTriangle extends Block {
   }
 
   //四角
-  boolean colTS(BlockSquare b) {
+  private boolean colTS(BlockSquare b) {
     PVector ma0 = PVector.sub(vt1, b.vs1);
     PVector mb0 = PVector.sub(vt2, b.vs1);
     PVector mc0 = PVector.sub(vt3, b.vs1);
@@ -126,7 +126,7 @@ class BlockTriangle extends Block {
 
 
   //円
-  boolean colTC(BlockCircle b) {
+  private boolean colTC(BlockCircle b) {
     PVector lA, lB, lC;
     PVector l1, l2, l3;
 

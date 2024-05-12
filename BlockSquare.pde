@@ -41,7 +41,7 @@ class BlockSquare extends Block {
   }
 
   //点
-  boolean colSP(BlockPoint b) {
+  private boolean colSP(BlockPoint b) {
     if (vs1.x <= b.point.x && vs4.x >= b.point.x && vs1.y <= b.point.y && vs4.y >= b.point.y) {
       return true;
     } else {
@@ -50,7 +50,7 @@ class BlockSquare extends Block {
   }
 
   //四角
-  boolean colSS(BlockSquare b) {
+  private boolean colSS(BlockSquare b) {
     if ((this.point.x-this.size>=b.vs1.x && this.point.x-this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
       ||(this.point.x+this.size>=b.vs1.x && this.point.x+this.size<=b.vs4.x && this.point.y-this.size>=b.vs1.y && this.point.y-this.size<=b.vs4.y)
       ||(this.point.x-this.size>=b.vs1.x && this.point.x-this.size<=b.vs4.x && this.point.y+this.size>=b.vs1.y && this.point.y+this.size<=b.vs4.y)
@@ -62,7 +62,7 @@ class BlockSquare extends Block {
   }
 
   //三角
-  boolean colST(BlockTriangle b) {
+  private boolean colST(BlockTriangle b) {
     if ((b.vt1.x>=vs1.x && b.vt1.y>=vs1.y && b.vt1.x<=vs4.x && b.vt1.y<=vs4.y)
       ||(b.vt2.x>=vs1.x && b.vt2.y>=vs1.y && b.vt2.x<=vs4.x && b.vt2.y<=vs4.y)
       ||(b.vt3.x>=vs1.x && b.vt3.y>=vs1.y && b.vt3.x<=vs4.x && b.vt3.y<=vs4.y)) {
@@ -73,7 +73,7 @@ class BlockSquare extends Block {
   }
 
   //円
-  boolean colSC(BlockCircle b) {
+  private boolean colSC(BlockCircle b) {
     PVector LA, LB, LC, LD;//四角の隅
     PVector L1, L2, L3, L4;//四角の辺
 

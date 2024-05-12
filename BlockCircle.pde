@@ -3,8 +3,14 @@
  */
 class BlockCircle extends Block {
 
-  BlockCircle(int px, int py, int bs) {
-    super(px, py, bs);
+  /**
+   * 円を生成
+   * @param x x座標
+   * @param y y座標
+   * @param size サイズ
+   */
+  BlockCircle(int x, int y, int size) {
+    super(x, y, size);
   }
 
   boolean isColliding(Block b) {
@@ -16,31 +22,23 @@ class BlockCircle extends Block {
       return colCS((BlockSquare)b);
     } else if (b instanceof BlockTriangle) {
       return colCT((BlockTriangle)b);
+    } else {
+      return false;
     }
-    return false;
   }
 
   //点
-  boolean colCP(BlockPoint b) {
-    PVector p;
-    p = new PVector(b.point.x, b.point.y);
-
-    if (this.point.dist(p) <= this.size) {
-      return true;
-    }
-    return false;
+  private boolean colCP(BlockPoint b) {
+    return this.point.dist(b.point) <= this.size;
   }
 
   //円
-  boolean colCC(BlockCircle b) {
-    if (this.point.dist(b.point) <= this.size + b.size) {
-      return true;
-    }
-    return false;
+  private boolean colCC(BlockCircle b) {
+    return this.point.dist(b.point) <= this.size + b.size;
   }
 
   //四角
-  boolean colCS(BlockSquare b) {
+  private boolean colCS(BlockSquare b) {
     PVector vs1, vs2, vs3, vs4;
 
     vs1 = new PVector(b.point.x-this.size, b.point.y-this.size);
@@ -53,12 +51,13 @@ class BlockCircle extends Block {
       ||(this.point.dist(vs3)<=this.size)
       ||(this.point.dist(vs4)<=this.size)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   //三角
-  boolean colCT(BlockTriangle b) {
+  private boolean colCT(BlockTriangle b) {
     PVector vt1, vt2, vt3;
 
     vt1 = new PVector(b.point.x, b.point.y - this.size);
@@ -69,8 +68,9 @@ class BlockCircle extends Block {
       ||(this.point.dist(vt2)<=this.size)
       ||(this.point.dist(vt3)<=this.size)) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   /**
@@ -82,6 +82,6 @@ class BlockCircle extends Block {
     } else {
       fill(255, 0, 0);
     }
-    ellipse(this.point.x, this.point.y, this.size*2, this.size*2);
+    ellipse(this.point.x, this.point.y, this.size * 2, this.size * 2);
   }
 }
