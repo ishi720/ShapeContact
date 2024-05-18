@@ -12,9 +12,7 @@ class BlockTriangle extends Block {
    */
   BlockTriangle(int x, int y, int size) {
     super(x, y, size);
-    vt1 = new PVector(this.point.x, this.point.y - this.size);
-    vt2 = new PVector(this.point.x - this.size, this.point.y + this.size);
-    vt3 = new PVector(this.point.x + this.size, this.point.y + this.size);
+    updateVertices();
   }
 
   /**
@@ -22,12 +20,16 @@ class BlockTriangle extends Block {
    */
   void update() {
     super.update();
-    vt1.x = this.point.x;
-    vt1.y = this.point.y - this.size;
-    vt2.x = this.point.x - this.size;
-    vt2.y = this.point.y + this.size;
-    vt3.x = this.point.x + this.size;
-    vt3.y = this.point.y + this.size;
+    updateVertices();
+  }
+
+  /**
+   * 三角形の頂点を更新
+   */
+  private void updateVertices() {
+    vt1 = new PVector(this.point.x, this.point.y - this.size);
+    vt2 = new PVector(this.point.x - this.size, this.point.y + this.size);
+    vt3 = new PVector(this.point.x + this.size, this.point.y + this.size);
   }
 
   /**
@@ -70,7 +72,11 @@ class BlockTriangle extends Block {
     }
   }
 
-  //三角
+  /**
+   * 三角形と三角形の当たり判定
+   * @param b 判定対象のブロック
+   * @return 当たっている場合はtrue、それ以外の場合はfalse
+   */
   private boolean colTT(BlockTriangle b) {
     PVector ma0 = PVector.sub(vt1, b.vt1);
     PVector mb0 = PVector.sub(vt2, b.vt1);
