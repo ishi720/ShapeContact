@@ -92,35 +92,46 @@ class BlockSquare extends Block {
    * @return 当たっている場合はtrue、それ以外の場合はfalse
    */
   private boolean colSC(BlockCircle b) {
-    PVector LA, LB, LC, LD;//四角の隅
-    PVector L1, L2, L3, L4;//四角の辺
 
-    LA = new PVector(b.point.x - vs1.x, b.point.y - vs1.y);
-    LB = new PVector(b.point.x - vs2.x, b.point.y - vs2.y);
-    LC = new PVector(b.point.x - vs3.x, b.point.y - vs3.y);
-    LD = new PVector(b.point.x - vs4.x, b.point.y - vs4.y);
-    L1 = new PVector(vs1.x - vs2.x, vs1.y - vs2.y);
-    L2 = new PVector(vs2.x - vs4.x, vs2.y - vs4.y);
-    L3 = new PVector(vs4.x - vs3.x, vs4.y - vs3.y);
-    L4 = new PVector(vs3.x - vs1.x, vs3.y - vs1.y);
+    PVector[] lines = {
+      new PVector(b.point.x - vs1.x, b.point.y - vs1.y),
+      new PVector(b.point.x - vs2.x, b.point.y - vs2.y),
+      new PVector(b.point.x - vs3.x, b.point.y - vs3.y),
+      new PVector(b.point.x - vs4.x, b.point.y - vs4.y)
+    };
 
-    if (( ((b.point.dist(vs1)*sin(PVector.angleBetween(LA, L1))) <=this.size)
-      && (b.point.x>=vs1.x-this.size) && (b.point.x<=vs2.x+this.size)
-      && (b.point.y>=vs1.y-this.size) && (b.point.y<=vs2.y+this.size)
-      ||((b.point.dist(vs2)*sin(PVector.angleBetween(LB, L2))) <=this.size)
-      && (b.point.x>=vs2.x-this.size) && (b.point.x<=vs4.x+this.size)
-      && (b.point.y>=vs2.y-this.size) && (b.point.y<=vs4.y+this.size)
-      ||((b.point.dist(vs3)*sin(PVector.angleBetween(LC, L3))) <=this.size)
-      && (b.point.x>=vs3.x-this.size) && (b.point.x<=vs4.x+this.size)
-      && (b.point.y>=vs3.y-this.size) && (b.point.y<=vs4.y+this.size)
-      ||((b.point.dist(vs1)*sin(PVector.angleBetween(LA, L4))) <=this.size)
-      && (b.point.x>=vs1.x-this.size) && (b.point.x<=vs3.x+this.size)
-      && (b.point.y>=vs1.y-this.size) && (b.point.y<=vs3.y+this.size)
-      )) {
+    PVector[] edges = {
+      new PVector(vs1.x - vs2.x, vs1.y - vs2.y),
+      new PVector(vs2.x - vs4.x, vs2.y - vs4.y),
+      new PVector(vs4.x - vs3.x, vs4.y - vs3.y),
+      new PVector(vs3.x - vs1.x, vs3.y - vs1.y)
+    };
+
+    if (b.point.dist(vs1) * sin(PVector.angleBetween(lines[0], edges[0])) <= this.size &&
+        b.point.x >= vs1.x - this.size && b.point.x <= vs2.x + this.size &&
+        b.point.y >= vs1.y - this.size && b.point.y <= vs2.y + this.size) {
       return true;
-    } else {
-      return false;
     }
+
+    if (b.point.dist(vs2) * sin(PVector.angleBetween(lines[1], edges[1])) <= this.size &&
+        b.point.x >= vs2.x - this.size && b.point.x <= vs4.x + this.size &&
+        b.point.y >= vs2.y - this.size && b.point.y <= vs4.y + this.size) {
+      return true;
+    }
+
+    if (b.point.dist(vs3) * sin(PVector.angleBetween(lines[2], edges[2])) <= this.size &&
+        b.point.x >= vs3.x - this.size && b.point.x <= vs4.x + this.size &&
+        b.point.y >= vs3.y - this.size && b.point.y <= vs4.y + this.size) {
+      return true;
+    }
+
+    if (b.point.dist(vs1) * sin(PVector.angleBetween(lines[3], edges[3])) <= this.size &&
+        b.point.x >= vs1.x - this.size && b.point.x <= vs3.x + this.size &&
+        b.point.y >= vs1.y - this.size && b.point.y <= vs3.y + this.size) {
+      return true;
+    }
+
+    return false;
   }
 
   /**

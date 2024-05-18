@@ -126,7 +126,7 @@ class BlockTriangle extends Block {
       return true;
     }
 
-    if (b.point.dist(vt3) * sin(PVector.angleBetween(lines[1], edges[1])) <= this.size &&
+    if (b.point.dist(vt3) * sin(PVector.angleBetween(lines[2], edges[2])) <= this.size &&
         b.point.x >= vt1.x - this.size && b.point.x <= vt3.x + this.size &&
         b.point.y >= vt1.y - this.size && b.point.y <= vt3.y + this.size) {
       return true;
