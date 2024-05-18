@@ -102,31 +102,37 @@ class BlockTriangle extends Block {
    * @return 当たっている場合はtrue、それ以外の場合はfalse
    */
   private boolean colTC(BlockCircle b) {
-    PVector lA, lB, lC;
-    PVector l1, l2, l3;
+    PVector[] lines = {
+      new PVector(b.point.x - vt1.x, b.point.y - vt1.y),
+      new PVector(b.point.x - vt2.x, b.point.y - vt2.y),
+      new PVector(b.point.x - vt3.x, b.point.y - vt3.y)
+    };
 
-    lA = new PVector(b.point.x - vt1.x, b.point.y - vt1.y);
-    lB = new PVector(b.point.x - vt2.x, b.point.y - vt2.y);
-    lC = new PVector(b.point.x - vt3.x, b.point.y - vt3.y);
+    PVector[] edges = {
+      new PVector(vt1.x - vt2.x, vt1.y - vt2.y),
+      new PVector(vt2.x - vt3.x, vt2.y - vt3.y),
+      new PVector(vt3.x - vt1.x, vt3.y - vt1.y)
+    };
 
-    l1 = new PVector(vt1.x - vt2.x, vt1.y - vt2.y);
-    l2 = new PVector(vt2.x - vt3.x, vt2.y - vt3.y);
-    l3 = new PVector(vt3.x - vt1.x, vt3.y - vt1.y);
-
-    if (( ((b.point.dist(vt1)*sin(PVector.angleBetween(lA, l1))) <=this.size)
-      && (b.point.x>=vt2.x-this.size) && (b.point.x<=vt1.x+this.size)
-      && (b.point.y>=vt1.y-this.size) && (b.point.y<=vt2.y+this.size)
-      || ((b.point.dist(vt2)*sin(PVector.angleBetween(lB, l2))) <=this.size)
-      && (b.point.x>=vt2.x-this.size) && (b.point.x<=vt3.x+this.size)
-      && (b.point.y>=vt2.y-this.size) && (b.point.y<=vt3.y+this.size)
-      || ((b.point.dist(vt3)*sin(PVector.angleBetween(lC, l3))) <=this.size)
-      && (b.point.x>=vt1.x-this.size) && (b.point.x<=vt3.x+this.size)
-      && (b.point.y>=vt1.y-this.size) && (b.point.y<=vt3.y+this.size)
-      )) {
+    if (b.point.dist(vt1) * sin(PVector.angleBetween(lines[0], edges[0])) <= this.size &&
+        b.point.x >= vt2.x - this.size && b.point.x <= vt1.x + this.size &&
+        b.point.y >= vt1.y - this.size && b.point.y <= vt2.y + this.size) {
       return true;
-    } else {
-      return false;
     }
+
+    if (b.point.dist(vt2) * sin(PVector.angleBetween(lines[1], edges[1])) <= this.size &&
+        b.point.x >= vt2.x - this.size && b.point.x <= vt3.x + this.size &&
+        b.point.y >= vt2.y - this.size && b.point.y <= vt3.y + this.size) {
+      return true;
+    }
+
+    if (b.point.dist(vt3) * sin(PVector.angleBetween(lines[1], edges[1])) <= this.size &&
+        b.point.x >= vt1.x - this.size && b.point.x <= vt3.x + this.size &&
+        b.point.y >= vt1.y - this.size && b.point.y <= vt3.y + this.size) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
